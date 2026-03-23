@@ -1,0 +1,120 @@
+diff --git a/node_modules/fit-file-parser/dist/cjs/fit-parser.js b/node_modules/fit-file-parser/dist/cjs/fit-parser.js
+index eca0109..9c9b8e8 100644
+--- a/node_modules/fit-file-parser/dist/cjs/fit-parser.js
++++ b/node_modules/fit-file-parser/dist/cjs/fit-parser.js
+@@ -210,7 +210,12 @@ class FitParser {
+                     break;
+                 default:
+                     if (messageType !== '') {
+-                        fitObj[messageType] = message;
++                        if (!fitObj[messageType]) fitObj[messageType] = [];
++                        if (Array.isArray(fitObj[messageType])) {
++                            fitObj[messageType].push(message);
++                        } else {
++                            fitObj[messageType] = [fitObj[messageType], message];
++                        }
+                     }
+                     break;
+             }
+diff --git a/node_modules/fit-file-parser/dist/cjs/fit.js b/node_modules/fit-file-parser/dist/cjs/fit.js
+index 8cc0af9..6f87beb 100644
+--- a/node_modules/fit-file-parser/dist/cjs/fit.js
++++ b/node_modules/fit-file-parser/dist/cjs/fit.js
+@@ -4179,6 +4179,37 @@ exports.FIT = {
+                 units: '',
+             },
+         },
++        104: {
++            name: 'device_battery_status',
++            253: {
++                field: 'timestamp',
++                type: 'date_time',
++                scale: null,
++                offset: 0,
++                units: '',
++            },
++            0: {
++                field: 'battery_voltage',
++                type: 'uint16',
++                scale: 1000,
++                offset: 0,
++                units: 'V',
++            },
++            2: {
++                field: 'battery_level',
++                type: 'uint8',
++                scale: null,
++                offset: 0,
++                units: 'percent',
++            },
++            3: {
++                field: 'temperature',
++                type: 'sint8',
++                scale: null,
++                offset: 0,
++                units: 'C',
++            },
++        },
+         108: {
+             name: 'o_hr_settings',
+             253: {
+diff --git a/node_modules/fit-file-parser/dist/fit-parser.js b/node_modules/fit-file-parser/dist/fit-parser.js
+index 290da7f..3fd2b86 100644
+--- a/node_modules/fit-file-parser/dist/fit-parser.js
++++ b/node_modules/fit-file-parser/dist/fit-parser.js
+@@ -208,7 +208,12 @@ export default class FitParser {
+                     break;
+                 default:
+                     if (messageType !== '') {
+-                        fitObj[messageType] = message;
++                        if (!fitObj[messageType]) fitObj[messageType] = [];
++                        if (Array.isArray(fitObj[messageType])) {
++                            fitObj[messageType].push(message);
++                        } else {
++                            fitObj[messageType] = [fitObj[messageType], message];
++                        }
+                     }
+                     break;
+             }
+diff --git a/node_modules/fit-file-parser/dist/fit.js b/node_modules/fit-file-parser/dist/fit.js
+index 3dc908d..4a0e65d 100644
+--- a/node_modules/fit-file-parser/dist/fit.js
++++ b/node_modules/fit-file-parser/dist/fit.js
+@@ -4176,6 +4176,37 @@ export const FIT = {
+                 units: '',
+             },
+         },
++        104: {
++            name: 'device_battery_status',
++            253: {
++                field: 'timestamp',
++                type: 'date_time',
++                scale: null,
++                offset: 0,
++                units: '',
++            },
++            0: {
++                field: 'battery_voltage',
++                type: 'uint16',
++                scale: 1000,
++                offset: 0,
++                units: 'V',
++            },
++            2: {
++                field: 'battery_level',
++                type: 'uint8',
++                scale: null,
++                offset: 0,
++                units: 'percent',
++            },
++            3: {
++                field: 'temperature',
++                type: 'sint8',
++                scale: null,
++                offset: 0,
++                units: 'C',
++            },
++        },
+         108: {
+             name: 'o_hr_settings',
+             253: {
