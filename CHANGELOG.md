@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-24
+
+### Added
+- GitHub Pages deployment workflow (auto-deploys on push to main)
+- Live demo link in README
+- MIT license
+
+### Changed
+- Rewrote README to focus on use cases and functionality
+
 ## [0.3.0] - 2026-03-24
 
 ### Added

@@ -1,79 +1,45 @@
 # FIT File Tools
 
-A browser-based tool for inspecting, analyzing, and comparing Garmin/ANT+ FIT activity files. Built with React, TypeScript, and Vite. All processing happens client-side — no data leaves your browser.
+Dive deep into your Garmin activity data — right in your browser.
 
-## Features
+FIT File Tools lets you open, explore, and compare `.fit` files from your Garmin device without uploading anything to a server. Your data stays on your machine, always.
 
-- **Upload** — Drag-and-drop or browse for `.fit` files. Parsed files are persisted in IndexedDB across sessions.
-- **Inspect** — View session summary, laps, device info, activity metrics, and zones target data. Interactive charts (heart rate, power, cadence, speed, altitude) with range brushing and selection stats. GPS route displayed on a MapLibre map with metric-based color coding.
-- **Compare** — Side-by-side comparison of two activity files with manual or GPS-based time synchronization and aligned metric charts.
-- **Extra Data** — Browse all non-standard FIT message types and fields as searchable/sortable tables.
+**Try it now:** https://rolandgroen.github.io/fit-file-tools/
 
-## Tech Stack
+## What You Can Do
 
-- **React 19** with TypeScript
-- **Vite 8** for dev server and bundling
-- **Tailwind CSS 4** for styling
-- **Zustand** for state management (persisted to IndexedDB)
-- **Recharts** for charts
-- **MapLibre GL** for maps
-- **fit-file-parser** for FIT binary decoding (with runtime patches for extended message support)
-- **Vitest** + **Testing Library** for tests
+### Analyze Your Rides, Runs, and Workouts
+Drop a `.fit` file and instantly see your full session breakdown: duration, distance, heart rate, power, cadence, speed, and more. Lap splits, device details, VO2 max estimates, training effect — it's all there.
 
-## Getting Started
+### Explore Interactive Charts
+Scroll through heart rate, power, cadence, speed, and altitude on interactive charts. Brush a time range to zoom in and get stats for just that segment — perfect for analyzing intervals or climbs.
 
-```bash
-npm install
-npm run dev
-```
+### See Your Route on a Map
+Your GPS track is displayed on a full map, color-coded by any metric. See exactly where you pushed hardest, climbed the most, or hit peak speed.
 
-Open http://localhost:5173 in your browser.
+### Compare Two Activities Side by Side
+Load two files and sync them up — either manually or automatically using GPS. Overlay metrics to see how one effort stacks up against another. Great for tracking progress or comparing routes.
 
-## Scripts
+### Dig Into Raw Data
+Every message type in the FIT file is available for inspection. Battery status, developer fields, zone targets — searchable and sortable, nothing hidden.
 
-| Script | Description |
-|---|---|
-| `npm run dev` | Start Vite dev server with HMR |
-| `npm run build` | Type-check and build for production |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Run ESLint |
-| `npm test` | Run tests in watch mode |
-| `npm run test:coverage` | Run tests once with coverage report |
+### Works Offline, Keeps Your Files
+Once loaded, your files are stored locally in your browser. Come back later and they're still there. No account needed, no cloud sync, no tracking.
 
-## Project Structure
+## Privacy
 
-```
-src/
-├── components/
-│   ├── compare/       # File comparison views
-│   ├── datafields/    # Extra FIT data browser
-│   ├── inspect/       # Activity inspection views, charts, map
-│   ├── layout/        # Header, sidebar
-│   └── upload/        # File drop zone
-├── lib/
-│   ├── colorScales.ts    # GeoJSON route coloring
-│   ├── constants.ts      # Metric definitions
-│   ├── fitParser.ts      # FIT file parsing and normalization
-│   ├── formatters.ts     # Display formatting utilities
-│   ├── geoUtils.ts       # Haversine distance, record lookups, bounds
-│   └── syncAlgorithm.ts  # Manual/GPS sync and record alignment
-├── stores/
-│   ├── comparisonStore.ts  # Comparison state
-│   ├── fileStore.ts        # Parsed file storage (IndexedDB-backed)
-│   └── uiStore.ts          # UI state (view, selection, hover)
-├── types/               # TypeScript interfaces
-└── test/                # Test setup
-```
+All parsing and analysis happens entirely in your browser. No data is sent to any server. Your activity files never leave your device.
 
-## Testing
-
-Tests are written with Vitest and cover utility functions, stores, and components:
+## Development
 
 ```bash
-npm test              # watch mode
-npm run test:coverage # single run with coverage
+npm install          # install dependencies
+npm run dev          # start dev server at http://localhost:5173
+npm run build        # production build
+npm test             # run tests
+npm run test:coverage  # tests with coverage
 ```
 
 ## License
 
-Private project.
+[MIT](LICENSE)
