@@ -56,5 +56,6 @@ $1`,
 }
 
 export default defineConfig({
+  base: '/fit-file-tools/',
   plugins: [react(), tailwindcss(), fitParserPatch()],
 })

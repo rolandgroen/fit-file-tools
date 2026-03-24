@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { get as idbGet, set as idbSet, del as idbDel, clear as idbClear } from 'idb-keyval';
+import { get as idbGet, set as idbSet, del as idbDel } from 'idb-keyval';
 import type { ParsedFitFile } from '../types/fit';
 import type { StateStorage } from 'zustand/middleware';
 
