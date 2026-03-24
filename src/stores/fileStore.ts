@@ -5,7 +5,7 @@ import type { ParsedFitFile } from '../types/fit';
 import type { StateStorage } from 'zustand/middleware';
 
 /** Revive ISO-8601 date strings back to Date objects when reading from IndexedDB. */
-function reviveDates<T>(obj: T): T {
+export function reviveDates<T>(obj: T): T {
   if (obj === null || obj === undefined) return obj;
   if (typeof obj === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(obj)) {
     return new Date(obj) as unknown as T;
@@ -91,6 +91,7 @@ export const useFileStore = create<FileState & FileActions>()(
 
 /** Migrate data from localStorage to IndexedDB (one-time). */
 async function migrateFromLocalStorage() {
+  if (typeof localStorage === 'undefined' || typeof localStorage.getItem !== 'function') return;
   const LS_KEY = 'fit-file-tools-files';
   const raw = localStorage.getItem(LS_KEY);
   if (!raw) return;

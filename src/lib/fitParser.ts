@@ -10,30 +10,35 @@ const parser = new FitParser({
   mode: 'list',
 });
 
-function num(value: unknown): number | null {
+/** @internal */
+export function num(value: unknown): number | null {
   if (value === undefined || value === null) return null;
   const n = Number(value);
   return isNaN(n) ? null : n;
 }
 
-function str(value: unknown): string {
+/** @internal */
+export function str(value: unknown): string {
   if (value === undefined || value === null) return 'unknown';
   return String(value);
 }
 
-function toDate(value: unknown): Date {
+/** @internal */
+export function toDate(value: unknown): Date {
   if (value instanceof Date) return value;
   if (typeof value === 'string' || typeof value === 'number') return new Date(value);
   return new Date();
 }
 
-const KNOWN_RECORD_KEYS = new Set([
+/** @internal */
+export const KNOWN_RECORD_KEYS = new Set([
   'timestamp', 'elapsed_time', 'timer_time', 'heart_rate', 'power', 'cadence',
   'speed', 'enhanced_speed', 'enhanced_altitude', 'altitude', 'distance',
   'position_lat', 'position_long', 'temperature',
 ]);
 
-function normalizeRecord(raw: Record<string, unknown>, startTime: number): FitRecord {
+/** @internal */
+export function normalizeRecord(raw: Record<string, unknown>, startTime: number): FitRecord {
   const timestamp = toDate(raw.timestamp);
   const elapsedTime = num(raw.elapsed_time) ?? (timestamp.getTime() - startTime) / 1000;
 
@@ -67,7 +72,8 @@ function normalizeRecord(raw: Record<string, unknown>, startTime: number): FitRe
   };
 }
 
-function normalizeLap(raw: Record<string, unknown>): FitLap {
+/** @internal */
+export function normalizeLap(raw: Record<string, unknown>): FitLap {
   return {
     startTime: toDate(raw.start_time ?? raw.timestamp),
     totalElapsedTime: num(raw.total_elapsed_time) ?? 0,
@@ -81,7 +87,8 @@ function normalizeLap(raw: Record<string, unknown>): FitLap {
   };
 }
 
-function normalizeSession(raw: Record<string, unknown>): FitSession {
+/** @internal */
+export function normalizeSession(raw: Record<string, unknown>): FitSession {
   return {
     sport: str(raw.sport),
     subSport: str(raw.sub_sport),
@@ -102,7 +109,8 @@ function normalizeSession(raw: Record<string, unknown>): FitSession {
   };
 }
 
-function normalizeDevice(raw: Record<string, unknown>): FitDevice {
+/** @internal */
+export function normalizeDevice(raw: Record<string, unknown>): FitDevice {
   return {
     manufacturer: str(raw.manufacturer),
     product: str(raw.product_name ?? raw.product),
@@ -112,12 +120,14 @@ function normalizeDevice(raw: Record<string, unknown>): FitDevice {
   };
 }
 
-function kmToM(val: unknown): number | null {
+/** @internal */
+export function kmToM(val: unknown): number | null {
   const n = num(val);
   return n !== null ? Math.round(n * 1000) : null;
 }
 
-function normalizeActivityMetrics(raw: Record<string, unknown>): ActivityMetrics {
+/** @internal */
+export function normalizeActivityMetrics(raw: Record<string, unknown>): ActivityMetrics {
   return {
     vo2Max: num(raw.vo2_max),
     firstVo2Max: num(raw.first_vo2_max),
@@ -134,7 +144,8 @@ function normalizeActivityMetrics(raw: Record<string, unknown>): ActivityMetrics
   };
 }
 
-function normalizeFileId(raw: Record<string, unknown>): FileId {
+/** @internal */
+export function normalizeFileId(raw: Record<string, unknown>): FileId {
   return {
     serialNumber: num(raw.serial_number),
     timeCreated: raw.time_created ? toDate(raw.time_created) : null,
@@ -144,7 +155,8 @@ function normalizeFileId(raw: Record<string, unknown>): FileId {
   };
 }
 
-function normalizeZonesTarget(raw: Record<string, unknown>): ZonesTarget {
+/** @internal */
+export function normalizeZonesTarget(raw: Record<string, unknown>): ZonesTarget {
   return {
     functionalThresholdPower: num(raw.functional_threshold_power),
     maxHeartRate: num(raw.max_heart_rate),
@@ -152,8 +164,8 @@ function normalizeZonesTarget(raw: Record<string, unknown>): ZonesTarget {
   };
 }
 
-/** Message types already handled by dedicated parsing or not useful for data fields. */
-const HANDLED_MESSAGE_TYPES = new Set([
+/** @internal Message types already handled by dedicated parsing or not useful for data fields. */
+export const HANDLED_MESSAGE_TYPES = new Set([
   'sessions', 'laps', 'records', 'devices',
   'file_id', 'file_creator', 'activity', 'software',
   'user_profile', 'device_settings', 'zones_target',
@@ -163,7 +175,8 @@ const HANDLED_MESSAGE_TYPES = new Set([
   'activity_metrics', 'file_ids', 'time_in_zone',
 ]);
 
-function toPrimitive(val: unknown): ExtraMessageValue {
+/** @internal */
+export function toPrimitive(val: unknown): ExtraMessageValue {
   if (val === null || val === undefined) return null;
   if (typeof val === 'number') return isNaN(val) ? null : val;
   if (typeof val === 'boolean') return val;
@@ -175,7 +188,8 @@ function toPrimitive(val: unknown): ExtraMessageValue {
   return String(val);
 }
 
-function extractExtraMessages(
+/** @internal */
+export function extractExtraMessages(
   rawData: Record<string, unknown>,
 ): Record<string, Record<string, ExtraMessageValue>[]> {
   const result: Record<string, Record<string, ExtraMessageValue>[]> = {};
