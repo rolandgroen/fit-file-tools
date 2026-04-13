@@ -4,6 +4,7 @@ import { METRICS } from '../../lib/constants';
 import { useUIStore } from '../../stores/uiStore';
 import { ChartPanel } from './ChartPanel';
 import { RangeBrush } from './RangeBrush';
+import { RangeShortcuts } from './RangeShortcuts';
 import { SelectionSummary } from './SelectionSummary';
 
 interface ChartStackProps {
@@ -42,7 +43,13 @@ export const ChartStack = memo(function ChartStack({
 
   return (
     <div className="space-y-3">
-      {enableBrush && <RangeBrush records={records} comparisonRecords={comparisonRecords} />}
+      {enableBrush && (
+        <div className="overflow-hidden rounded-lg border border-blue-200/60 bg-blue-50/30 dark:border-blue-800/40 dark:bg-blue-950/20">
+          <RangeShortcuts records={records} />
+          <div className="mx-4 border-t border-blue-200/60 dark:border-blue-800/40" />
+          <RangeBrush records={records} comparisonRecords={comparisonRecords} />
+        </div>
+      )}
       {enableBrush && (
         <SelectionSummary records={records} timeRange={timeRange} />
       )}

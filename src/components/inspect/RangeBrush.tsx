@@ -179,7 +179,7 @@ export function RangeBrush({ records, comparisonRecords }: RangeBrushProps) {
 
   return (
     <div
-      className="relative rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+      className="relative p-4"
       onMouseUp={commitRange}
       onTouchEnd={commitRange}
     >
